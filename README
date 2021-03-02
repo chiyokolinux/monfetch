@@ -1,0 +1,10 @@
+monfetch
+--------
+
+a remote system monitoring tool based on the conecpt of fetch programs.
+
+monfetch is a client-server program to remotely and centrally monitor
+servers. the agent fetches information in a classic UNIX fetch program
+style and POSTs the collected information to a remote server.
+The remote server will then collect that information and display it in
+a way similar to those fetch programs, but on a web interface.
