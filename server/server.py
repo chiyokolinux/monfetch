@@ -69,7 +69,7 @@ banners = {
     "suse": [
         "<span class=\"green\">      _______    </span>",
         "<span class=\"green\">  -___|   __ \\   </span>",
-        "<span class=\"green\">         / </span><span class=\"white\">.</span><span class=\"green\">\\ \\  </span>",
+        "<span class=\"green\">         / </span><span class=\"bold white\">.</span><span class=\"green\">\\ \\  </span>",
         "<span class=\"green\">         \\__/ |  </span>",
         "<span class=\"green\">       _______|  </span>",
         "<span class=\"green\">       \\_______  </span>",
@@ -144,7 +144,7 @@ def register(auth, hostname):
         "hostname": hostname,
         "chassis": request.form["chassis"],
         "os": request.form["os"],
-        "cpu": request.form["cpu"],
+        "cpu": request.form["cpu"].replace(" Quad-Core", "").replace(" Dual-Core", "").replace(" Eight-Core", "").replace(" Hexa-Core", "").replace(" Processor", ""),
         "kernel": request.form["kernel"],
         "shell": request.form["shell"],
         "pkgs": request.form["pkgs"],
