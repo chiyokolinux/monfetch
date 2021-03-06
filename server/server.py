@@ -66,7 +66,14 @@ banners = {
         "<span class=\"magenta bold\">               </span>"
     ],
     "suse": [
-        ""
+        "<span class=\"green\">      _______    </span>",
+        "<span class=\"green\">  -___|   __ \\   </span>",
+        "<span class=\"green\">         / </span><span class=\"white\">.</span><span class=\"green\">\\ \\  </span>",
+        "<span class=\"green\">         \\__/ |  </span>",
+        "<span class=\"green\">       _______|  </span>",
+        "<span class=\"green\">       \\_______  </span>",
+        "<span class=\"green\">  --__________/  </span>",
+        "<span class=\"green\">               </span>"
     ],
     "void": [
         ""
