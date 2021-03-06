@@ -1,11 +1,23 @@
 <html>
   <head>
     <title>monfetch</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/main.css">
   </head>
   <body>
     {% for client in clients %}
-    
+    <div class="pre">
+{% autoescape false %}
+{{ client["logo"][0] }}<span class="bold {{ client["color"] }}">{{ client["hostname"] }}</span>
+{{ client["logo"][1] }}<span class="bold {{ client["color"] }}">CHASSIS:    </span>{{ client["chassis"] }}
+{{ client["logo"][2] }}<span class="bold {{ client["color"] }}">CPU:        </span>{{ client["cpu"] }}
+{{ client["logo"][3] }}<span class="bold {{ client["color"] }}">KERNEL:     </span>{{ client["kernel"] }}
+{{ client["logo"][4] }}<span class="bold {{ client["color"] }}">SHELL:      </span>{{ client["shell"] }}
+{{ client["logo"][5] }}<span class="bold {{ client["color"] }}">PACKAGES:   </span>{{ client["pkgs"] }}
+{{ client["logo"][6] }}<span class="bold {{ client["color"] }}">DISK:       </span>{{ client["disk"] }}
+{{ client["logo"][7] }}<span class="bold {{ client["color"] }}">MEMORY:     </span>{{ client["mem"] }}
+{% endautoescape %}
+    </div>
     {% endfor %}
   </body>
 </html>

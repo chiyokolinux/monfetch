@@ -4,13 +4,14 @@ import sys
 import os
 from time import sleep
 from flask import Flask, render_template, request, send_from_directory, make_response, jsonify
+import random
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
 
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 PUBLIC = True
 HREFHOSTURL = "http://localhost:6969"
-AUTH = "put some secret string in here"
+AUTH = "secret"
 
 clients = {}
 
@@ -23,7 +24,7 @@ banners = {
         "<span class=\"blue\">    / /    \\ \\/\\ \\    </span>",
         "<span class=\"blue\">   / / /|   \\ \\ \\ \\   </span>",
         "<span class=\"blue\">  /_/ /_|    \\_\\ \\_\\  </span>",
-        "<span class=\"blue\">               </span>"
+        "<span class=\"blue\">                      </span>"
     ],
     "debian": [
         "<span class=\"red\">    _____    </span>",
@@ -32,8 +33,8 @@ banners = {
         "<span class=\"red\">  |  <span class=\"bold\">\\___-   </span></span>",
         "<span class=\"red bold\">  -_         </span>",
         "<span class=\"red bold\">    --_      </span>",
-        "<span class=\"red bold\">    --_      </span>",
-        "<span class=\"red bold\">               </span>"
+        "<span class=\"red bold\">             </span>",
+        "<span class=\"red bold\">             </span>"
     ],
     "ubuntu": [
         "<span class=\"orange\">           _   </span>",
@@ -73,13 +74,27 @@ banners = {
         "<span class=\"green\">       _______|  </span>",
         "<span class=\"green\">       \\_______  </span>",
         "<span class=\"green\">  --__________/  </span>",
-        "<span class=\"green\">               </span>"
+        "<span class=\"green\">                 </span>"
     ],
     "void": [
-        ""
+        "<span class=\"green bold\">      _______      </span>",
+        "<span class=\"green\">      <span class=\"bold\">\\_____ `-    </span></span>",
+        "<span class=\"green\">   /\\   <span class=\"bold\">___ `- \\   </span></span>",
+        "<span class=\"green\">  | |  <span class=\"bold\">/   \  | |  </span></span>",
+        "<span class=\"green\">  | |  <span class=\"bold\">\___/  | |  </span></span>",
+        "<span class=\"green\">   \\ `-_____  <span class=\"bold\">\\/   </span></span>",
+        "<span class=\"green\">    `-______\\      </span>",
+        "<span class=\"green\">                   </span>"
     ],
     "linux": [
-        ""
+        "<span class=\"black\">      ___     </span>",
+        "<span class=\"black\">     (</span><span class=\"white\">.. </span><span class=\"black\">\    </span>",
+        "<span class=\"black\">     (</span><span class=\"yellow\"><> </span><span class=\"black\">|    </span>",
+        "<span class=\"black\">    /</span><span class=\"white\">/  \\ </span><span class=\"black\">\\   </span>",
+        "<span class=\"black\">   ( </span><span class=\"white\">|  | </span><span class=\"black\">/|  </span>",
+        "<span class=\"yellow\">  _</span><span class=\"black\">/\\ </span><span class=\"white\">__)</span><span class=\"black\">/</span><span class=\"yellow\">_</span><span class=\"black\">)  </span>",
+        "<span class=\"yellow\">  \/</span><span class=\"black\">-____</span><span class=\"yellow\">\/   </span>",
+        "<span class=\"black\">              </span>"
     ]
 }
 colors = {
@@ -95,30 +110,55 @@ colors = {
 
 @app.route('/')
 def index():
-    return render_template("index.html", clients=clients)
+    return render_template("index.html", clients=list(clients.values()))
 
 @app.route('/<auth>/<hostname>', methods=['POST'])
 def register(auth, hostname):
     if auth != AUTH:
         return make_response(jsonify({"message": "Unauthorized", "redirect": "/unauthorized"}), 401)
+    osname = request.form["os"].lower()
+    logo = banners["linux"]
+    color = colors["linux"]
+    if "debian" in osname or "devuan" in osname:
+        logo = banners["debian"]
+        color = colors["debian"]
+    elif "alpine" in osname:
+        logo = banners["alpine"]
+        color = colors["alpine"]
+    elif "ubuntu" in osname:
+        logo = banners["ubuntu"]
+        color = colors["ubuntu"]
+    elif "fedora" in osname or "centos" in osname:
+        logo = banners["fedora"]
+        color = colors["fedora"]
+    elif "gentoo" in osname or "funtoo" in osname:
+        logo = banners["gentoo"]
+        color = colors["gentoo"]
+    elif "suse" in osname:
+        logo = banners["suse"]
+        color = colors["suse"]
+    elif "void" in osname:
+        logo = banners["void"]
+        color = colors["void"]
     clients[hostname] = {
-        hostname = hostname,
-        chassis = request.form["chassis"],
-        os = request.form["os"],
-        cpu = request.form["cpu"],
-        kernel = request.form["kernel"],
-        shell = request.form["shell"]
-        pkgs = request.form["pkgs"],
-        disk = request.form["disk"],
-        thermals = request.form["thermals"],
-        mem = request.form["mem"],
-        load1 = request.form["load1"],
-        load5 = request.form["load5"],
-        load15 = request.form["load15"],
-        uptime = request.form["uptime"]
+        "hostname": hostname,
+        "chassis": request.form["chassis"],
+        "os": request.form["os"],
+        "cpu": request.form["cpu"],
+        "kernel": request.form["kernel"],
+        "shell": request.form["shell"],
+        "pkgs": request.form["pkgs"],
+        "disk": request.form["disk"],
+        "thermals": request.form["thermals"],
+        "mem": request.form["mem"],
+        "load1": request.form["load1"],
+        "load5": request.form["load5"],
+        "load15": request.form["load15"],
+        "uptime": request.form["uptime"],
+        "logo": logo,
+        "color": color
     }
+    return make_response(jsonify({"message": "OK"}), 200)
 
 if __name__ == '__main__':
-    userdb = load_userdb()
-    latest20vids = load_latest20vids()
-    app.run(host='0.0.0.0' if PUBLIC else '127.0.0.1', port=4545, debug=True)
+    app.run(host='0.0.0.0' if PUBLIC else '127.0.0.1', port=6969, debug=True)

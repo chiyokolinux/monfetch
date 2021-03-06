@@ -7,8 +7,8 @@
 # This programme is provided under the AGPL-3.0 License. See LICENSE for more details.
 
 # Connection
-SERVER="monfetch-server.example.com"
-AUTH="put some secret string in here"
+SERVER="localhost:6969"
+AUTH="secret"
 
 # Display options
 HOSTNAMEARGS=""

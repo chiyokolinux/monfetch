@@ -114,7 +114,7 @@ run() {
         get_load
         get_uptime
         
-        curl --quiet -X POST "http://$SERVER/$AUTH/$hostname" -F "chassis=$chassis" -F "os=$os" -F "cpu=$cpu" -F "kernel=$kernel" -F "shell=$shell" -F "pkgs=$pkgs" -F "disk=$disk" -F "thermals=$thermals" -F "mem=$mem" -F "load1=$load1" -F "load5=$load5" -F "load15=$load15" -F "uptime=$uptime"
+        curl --silent -X POST "http://$SERVER/$AUTH/$hostname" -F "chassis=$chassis" -F "os=$os" -F "cpu=$cpu" -F "kernel=$kernel" -F "shell=$shell" -F "pkgs=$pkgs" -F "disk=$disk" -F "thermals=$thermals" -F "mem=$mem" -F "load1=$load1" -F "load5=$load5" -F "load15=$load15" -F "uptime=$uptime"
         sleep "$INTERVAL"
     done
 }
