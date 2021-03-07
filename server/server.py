@@ -119,7 +119,7 @@ def register(auth, hostname):
     osname = request.form["os"].lower()
     logo = banners["linux"]
     color = colors["linux"]
-    if "debian" in osname or "devuan" in osname:
+    if "debian" in osname or "devuan" in osname or "raspbian" in osname:
         logo = banners["debian"]
         color = colors["debian"]
     elif "alpine" in osname:
