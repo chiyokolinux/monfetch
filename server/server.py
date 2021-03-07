@@ -10,7 +10,6 @@ app = Flask(__name__, static_folder='static', template_folder='templates')
 
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 PUBLIC = True
-HREFHOSTURL = "http://localhost:6969"
 AUTH = "secret"
 
 clients = {}
@@ -161,4 +160,4 @@ def register(auth, hostname):
     return make_response(jsonify({"message": "OK"}), 200)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0' if PUBLIC else '127.0.0.1', port=6969, debug=True)
+    app.run(host='0.0.0.0' if PUBLIC else '127.0.0.1', port=6969, debug=False if PUBLIC else True)
