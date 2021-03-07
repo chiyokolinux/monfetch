@@ -8,3 +8,20 @@ servers. the agent fetches information in a classic UNIX fetch program
 style and POSTs the collected information to a remote server.
 The remote server will then collect that information and display it in
 a way similar to those fetch programs, but on a web interface.
+
+-> instructions
+
+server:
+
+* git clone
+* install python3 and flask
+* cd into the server/ directory
+* customize auth token
+* run the server somehow, i.e. nohup python3 server.py &
+
+client(s):
+
+* git clone
+* cd into the server/ directory
+* set auth token & server url
+* run the agent somehow, i.e. nohup ./agent.sh &
