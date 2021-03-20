@@ -73,7 +73,7 @@ get_pkgs() {
 }
 
 get_disk() {
-    disk="$(df -h 2> /dev/null | awk '/\/$/ {print $3 "/" $2 " (" $5 ")"}')"
+    disk="$(df -h 2> /dev/null | awk '/\/$/ {print $3 " / " $2 " (" $5 ")"}')"
 }
 
 get_thermals() {
