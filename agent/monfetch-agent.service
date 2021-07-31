@@ -1,0 +1,12 @@
+[Unit]
+Description=monfetch data collection and sending agent
+After=network.target
+
+[Service]
+Type=simple
+Restart=on-failure
+ExecStart=/usr/local/bin/monfetch/agent/agent.sh
+WorkingDirectory=/usr/local/bin/monfetch/agent
+
+[Install]
+WantedBy=multi-user.target

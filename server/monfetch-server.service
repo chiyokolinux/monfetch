@@ -1,0 +1,12 @@
+[Unit]
+Description=monfetch fetch-style web monitoring service
+After=network.target
+
+[Service]
+Type=simple
+Restart=on-failure
+ExecStart=/usr/local/bin/monfetch/server/server.sh
+WorkingDirectory=/usr/local/bin/monfetch/server
+
+[Install]
+WantedBy=multi-user.target
