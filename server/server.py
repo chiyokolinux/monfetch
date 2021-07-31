@@ -5,6 +5,7 @@ import os
 from time import sleep
 from flask import Flask, render_template, request, send_from_directory, make_response, jsonify
 import random
+from datetime import timedelta
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
 
@@ -23,6 +24,8 @@ banners = {
         "<span class=\"blue\">    / /    \\ \\/\\ \\    </span>",
         "<span class=\"blue\">   / / /|   \\ \\ \\ \\   </span>",
         "<span class=\"blue\">  /_/ /_|    \\_\\ \\_\\  </span>",
+        "<span class=\"blue\">                      </span>",
+        "<span class=\"blue\">                      </span>",
         "<span class=\"blue\">                      </span>"
     ],
     "debian": [
@@ -32,6 +35,8 @@ banners = {
         "<span class=\"red\">  |  <span class=\"bold\">\\___-   </span></span>",
         "<span class=\"red bold\">  -_         </span>",
         "<span class=\"red bold\">    --_      </span>",
+        "<span class=\"red bold\">             </span>",
+        "<span class=\"red bold\">             </span>",
         "<span class=\"red bold\">             </span>",
         "<span class=\"red bold\">             </span>"
     ],
@@ -43,6 +48,8 @@ banners = {
         "<span class=\"orange\">    \\  --- _/  </span>",
         "<span class=\"orange\">       ---(_)  </span>",
         "<span class=\"orange\">               </span>",
+        "<span class=\"orange\">               </span>",
+        "<span class=\"orange\">               </span>",
         "<span class=\"orange\">               </span>"
     ],
     "fedora": [
@@ -53,7 +60,9 @@ banners = {
         "<span class=\"blue\">   / </span><span class=\"white\">(_    _)</span><span class=\"blue\">_/   </span>",
         "<span class=\"blue\">  / /  </span><span class=\"white\">|  |       </span>",
         "<span class=\"blue\">  \\ \\</span><span class=\"white\">__/  |       </span>",
-        "<span class=\"blue\">   \\</span><span class=\"white\">(_____/       </span>"
+        "<span class=\"blue\">   \\</span><span class=\"white\">(_____/       </span>",
+        "<span class=\"white\">                  </span>",
+        "<span class=\"white\">                  </span>"
     ],
     "gentoo": [
         "<span class=\"magenta\">    .-----.      </span>",
@@ -63,6 +72,8 @@ banners = {
         "<span class=\"magenta bold\">   .\`       .\`   </span>",
         "<span class=\"magenta bold\">  /       .\`     </span>",
         "<span class=\"magenta bold\">  \____.-\`       </span>",
+        "<span class=\"magenta bold\">               </span>",
+        "<span class=\"magenta bold\">               </span>",
         "<span class=\"magenta bold\">               </span>"
     ],
     "suse": [
@@ -73,6 +84,8 @@ banners = {
         "<span class=\"green\">       _______|  </span>",
         "<span class=\"green\">       \\_______  </span>",
         "<span class=\"green\">  --__________/  </span>",
+        "<span class=\"green\">                 </span>",
+        "<span class=\"green\">                 </span>",
         "<span class=\"green\">                 </span>"
     ],
     "void": [
@@ -83,6 +96,8 @@ banners = {
         "<span class=\"green\">  | |  <span class=\"bold\">\___/  | |  </span></span>",
         "<span class=\"green\">   \\ `-_____  <span class=\"bold\">\\/   </span></span>",
         "<span class=\"green\">    `-______\\      </span>",
+        "<span class=\"green\">                   </span>",
+        "<span class=\"green\">                   </span>",
         "<span class=\"green\">                   </span>"
     ],
     "linux": [
@@ -93,6 +108,7 @@ banners = {
         "<span class=\"black\">   ( </span><span class=\"white\">|  | </span><span class=\"black\">/|  </span>",
         "<span class=\"yellow\">  _</span><span class=\"black\">/\\ </span><span class=\"white\">__)</span><span class=\"black\">/</span><span class=\"yellow\">_</span><span class=\"black\">)  </span>",
         "<span class=\"yellow\">  \/</span><span class=\"black\">-____</span><span class=\"yellow\">\/   </span>",
+        "<span class=\"black\">              </span>",
         "<span class=\"black\">              </span>"
     ]
 }
@@ -146,17 +162,29 @@ def register(auth, hostname):
         "cpu": request.form["cpu"].replace(" Quad-Core", "").replace(" Dual-Core", "").replace(" Eight-Core", "").replace(" Hexa-Core", "").replace(" Processor", ""),
         "kernel": request.form["kernel"],
         "shell": request.form["shell"],
-        "pkgs": request.form["pkgs"],
+        "packages": request.form["pkgs"],
         "disk": request.form["disk"],
         "thermals": request.form["thermals"],
-        "mem": request.form["mem"],
+        "memory": request.form["mem"],
         "load1": request.form["load1"],
         "load5": request.form["load5"],
         "load15": request.form["load15"],
-        "uptime": request.form["uptime"],
+        "uptime": str(timedelta(seconds=int(float(request.form["uptime"])))),
         "logo": logo,
-        "color": color
+        "color": color,
+        "text": []
     }
+    for wrkey in [ "cpu", "kernel", "packages", "disk", "memory", "thermals", "load", "uptime", "shell", "chassis" ]:
+        if wrkey != "load":
+            if wrkey == "thermals" and clients[hostname][wrkey] == "0":
+                continue
+            if clients[hostname][wrkey] != "":
+                clients[hostname]["text"].append(f'<span class="bold {clients[hostname]["color"]}">{wrkey.upper()}:{" " * (11 - len(wrkey))}</span>{clients[hostname][wrkey]}')
+        else:
+            if clients[hostname]["load1"] != "" and clients[hostname]["load5"] != "" and clients[hostname]["load15"] != "":
+                clients[hostname]["text"].append(f'<span class="bold {clients[hostname]["color"]}">{wrkey.upper()}:{" " * (11 - len(wrkey))}</span>{clients[hostname]["load1"]} {clients[hostname]["load5"]} {clients[hostname]["load15"]}')
+    while len(clients[hostname]["text"]) < 9:
+        clients[hostname]["text"].append("")
     return make_response(jsonify({"message": "OK"}), 200)
 
 if __name__ == '__main__':
