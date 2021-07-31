@@ -78,7 +78,7 @@ get_disk() {
 
 get_thermals() {
     if [ -d /sys/class/thermal/thermal_zone0 ]; then
-        thermals="$(cat /sys/class/thermal/thermal_zone0/t* | head -n1)"
+        thermals="$(cat /sys/class/thermal/thermal_zone0/temp | head -n1)"
     else
         thermals="0"
     fi
