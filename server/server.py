@@ -164,7 +164,7 @@ def register(auth, hostname):
         "shell": request.form["shell"],
         "packages": request.form["pkgs"],
         "disk": request.form["disk"],
-        "thermals": request.form["thermals"],
+        "thermals": str(int(request.form["thermals"]) / 1000.0) + " °C",
         "memory": request.form["mem"],
         "load1": request.form["load1"],
         "load5": request.form["load5"],
