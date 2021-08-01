@@ -4,7 +4,7 @@
 # conecpt of fetch programs.
 #
 # Copyright (c) 2021 Emily <elishikawa@jagudev.net>
-# This programme is provided under the AGPL-3.0 License. See LICENSE for more details.
+# This program is provided under the AGPL-3.0 License. See LICENSE for more details.
 
 # Load config
 . ./config.sh
