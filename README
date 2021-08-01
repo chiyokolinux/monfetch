@@ -22,6 +22,6 @@ server:
 client(s):
 
 * git clone
-* cd into the server/ directory
+* cd into the agent/ directory
 * set auth token & server url
 * run the agent somehow, i.e. nohup ./agent.sh &
