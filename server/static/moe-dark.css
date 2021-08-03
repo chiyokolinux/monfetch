@@ -1,0 +1,93 @@
+html, body {
+    box-sizing: border-box;
+    background-color: #303030;
+}
+
+.pre {
+    display: block;
+    unicode-bidi: embed;
+    white-space: pre;
+}
+
+.pre, pre {
+    font-family: Hack, Fira Code, monospace;
+    font-size: 14px;
+    background-color: #303030;
+    color: #c6c6c6;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.black {
+    color: #3a3a3a;
+}
+
+.bold.black {
+    color: #6c6c6c;
+}
+
+.red {
+    color: #ef2929;
+}
+
+.bold.red {
+    color: #ff4b4b;
+}
+
+.green {
+    color: #a1db00;
+}
+
+.bold.green {
+    color: #afff00;
+}
+
+.yellow {
+    color: #ffd700;
+}
+
+.bold.yellow {
+    color: #fce94f;
+}
+
+.orange {
+    color: #ff8700;
+}
+
+.bold.orange {
+    color: #ffaf5f;
+}
+
+.blue {
+    color: #5fafd7;
+}
+
+.bold.blue {
+    color: #afd7ff;
+}
+
+.magenta {
+    color: #ff4ea3;
+}
+
+.bold.magenta {
+    color: #ff7bbb;
+}
+
+.cyan {
+    color: #00d7af;
+}
+
+.bold.cyan {
+    color: #87d7af;
+}
+
+.white {
+    color: #c6c6c6;
+}
+
+.bold.white {
+    color: #eeeeee;
+}
