@@ -5,7 +5,7 @@ After=network.target
 [Service]
 Type=simple
 Restart=on-failure
-ExecStart=/usr/local/bin/monfetch/server/server.sh
+ExecStart=/usr/sbin/uwsgi monfetch-uwsgi.ini
 WorkingDirectory=/usr/local/bin/monfetch/server
 
 [Install]
